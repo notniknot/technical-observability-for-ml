@@ -1,0 +1,49 @@
+loki:
+  storage:
+    bucketNames:
+      chunks: loki-chunks
+      ruler: loki-ruler
+      admin: loki-admin
+    type: s3
+    s3:
+      endpoint: minio:9000
+      s3ForcePathStyle: true
+      insecure: true
+  commonConfig:
+    replication_factor: 1
+  auth_enabled: false
+
+write:
+  replicas: 1
+  extraArgs:
+    - "-config.expand-env=true"
+  extraEnv:
+    - name: AWS_ACCESS_KEY_ID
+      valueFrom:
+        secretKeyRef:
+          name: minio
+          key: root-user
+    - name: AWS_SECRET_ACCESS_KEY
+      valueFrom:
+        secretKeyRef:
+          name: minio
+          key: root-password
+
+read:
+  replicas: 1
+  extraArgs:
+    - "-config.expand-env=true"
+  extraEnv:
+    - name: AWS_ACCESS_KEY_ID
+      valueFrom:
+        secretKeyRef:
+          name: minio
+          key: root-user
+    - name: AWS_SECRET_ACCESS_KEY
+      valueFrom:
+        secretKeyRef:
+          name: minio
+          key: root-password
+
+backend:
+  replicas: 1
