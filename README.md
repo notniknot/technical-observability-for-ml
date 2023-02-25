@@ -2,7 +2,7 @@
 	<img
 		width="400"
 		alt="technical-observability-for-ml icon"
-		src="docs/to-icon.png"
+		src="docs/img/to-icon.png"
     >
 </h1>
 
@@ -27,9 +27,11 @@
 </p>
 
 # Addressed Issues
-The three pillars of observability in software monitoring are **logs**, **metrics**, and **traces**. These three elements work together to provide a comprehensive view of an application's behavior and performance in production environments.
+Not implementing monitoring in software development is a serious issue because it can lead to increased downtime, poor user experience, inefficient resource utilization, security vulnerabilities, and difficulty in identifying the root cause of errors. These issues can impact the success of the software development project and the satisfaction of its users. Monitoring is crucial for detecting and diagnosing issues quickly, optimizing performance, and ensuring a positive user experience.
 
-**"image of pillars"**
+Therefore, this project explains the three pillars of observability in software monitoring and how they can be implemented in the context of a Machine Learning Model. Those pillars are **logs**, **metrics**, and **traces**. These three elements work together to provide a comprehensive view of an application's behavior and performance in every possible environment.
+
+![three-pillars](docs/img/three-pillars.png)
 
 
 ## Logs:
