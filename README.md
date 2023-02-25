@@ -27,9 +27,9 @@
 </p>
 
 # Addressed Issues
-Not implementing monitoring in software development is a serious issue because it can lead to increased downtime, poor user experience, inefficient resource utilization, security vulnerabilities, and difficulty in identifying the root cause of errors. These issues can impact the success of the software development project and the satisfaction of its users. Monitoring is crucial for detecting and diagnosing issues quickly, optimizing performance, and ensuring a positive user experience.
+Not implementing monitoring in software development is a serious issue because it can lead to increased downtime, poor user experience, inefficient resource utilization, security vulnerabilities, and difficulty in identifying the root cause of errors. These issues can impact the success of the software development project and the satisfaction of its users.
 
-Therefore, this project explains the three pillars of observability in software monitoring and how they can be implemented in the context of a Machine Learning Model. Those pillars are **logs**, **metrics**, and **traces**. These three elements work together to provide a comprehensive view of an application's behavior and performance in every possible environment.
+Therefore, this project explains the three pillars of observability in software monitoring and how they can be implemented in the context of a Machine Learning Model. Those pillars are **logs**, **metrics**, and **traces**. These three elements work together to provide a comprehensive view of an application's behavior and performance in an environment consisting of microservices.
 
 ![three-pillars](docs/img/three-pillars.png)
 
@@ -61,7 +61,17 @@ The three pillars of observability - logging, metrics, and tracing - are importa
 **4. Business stakeholders:** Observability data can provide valuable insights into user behavior, performance trends, and the impact of changes to the application, helping stakeholders make data-driven decisions and prioritize areas for improvement.
 
 # Architecture
-...
+![architecture](docs/img/architecture.png)
+
+**Visualization:** We use Grafana to provide a user-friendly interface for visualizing and analyzing data from various sources.
+
+**Metrics:** We use Prometheus to collect, store, and analyze time-series data for monitoring and alerting cloud-native applications and infrastructure.
+
+**Logs:** We use Loki to provide a horizontally-scalable, highly-available, and multi-tenant log aggregation system for cloud-native applications and infrastructure. Therefore, Promtail helps to collect those logs from the log files of the K8s pods and sends them to Loki for storage, analysis, and visualization.
+
+**Metrics:** We use Prometheus to collect, store, and analyze metrics as time-series data for monitoring K8s applications and infrastructure. Note: Grafana Mimir is not part of this architecture because Prometheus can store the metrics in an own timeseries database to some extent. This is good enough for this example. In a real world scenario you would definitely choose a separate metric store.
+
+**Traces:** We use Tempo to provide a scalable and cost-effective distributed tracing backend for cloud-native applications and infrastructure.
 
 # Setup
 
