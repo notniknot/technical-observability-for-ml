@@ -57,7 +57,7 @@ Tracing involves tracking the flow of requests through an application, including
 # Technical Observability in Machine Learning
 As machine learning applications are very similar to traditional applications in a technical sense, they need to be monitored as well. However, there are some aspects to take a closer look at, that may differ slightly from traditional software applications.
 
-**Metrics:** Regarding Google's Golden Signals the latency is important to measure the time our service takes for some input including data preprocessing and generating predictions (maybe we need adaptive batching to serve responses more quickly). Another example is the saturation. ML-Models tend to acquire a lot of resources. Is our hardware strong enough to serve the amount of requests (do we need to configure copy-on-write mechanisms to reduce memory utilization)?
+**Metrics:** Regarding Google's Golden Signals the latency is important to measure the time our service takes for some input including data preprocessing and generating predictions (maybe we need adaptive batching to serve responses more quickly -> see [adaptive batching](https://docs.bentoml.org/en/latest/guides/batching.html#adaptive-batching)). Another example is the saturation. ML-Models tend to acquire a lot of resources. Is our hardware strong enough to serve the amount of requests (do we need to configure copy-on-write mechanisms to reduce memory utilization -> see [preloading](https://www.joelsleppy.com/blog/gunicorn-application-preloading/))?
 
 **Logs:** The logs are the first source of information when an application needs debugging. E.g. this can be important to retrace errors in the data preprocessing graph.
 
