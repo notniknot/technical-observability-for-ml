@@ -20,6 +20,7 @@
 
 <p align="center">
   <a href="#addressed-issues">Addressed Issues</a> •
+  <a href="#technical-observability-in-machine-learning">Technical Observability in ML</a> •
   <a href="#target-groups">Target Groups</a> •
   <a href="#architecture">Architecture</a> •
   <a href="#setup">Setup</a> •
@@ -51,6 +52,15 @@ Golden Signals (see [Google's Golden Signals](https://sre.google/sre-book/monito
 
 ## Traces
 Tracing involves tracking the flow of requests through an application, including all of the services and components involved in processing the request. Tracing provides a detailed view of an application's behavior, helping to identify performance bottlenecks and pinpoint the source of errors. Tracing can be used to identify issues such as slow database queries, network latency, and inefficient code.
+
+
+# Technical Observability in Machine Learning
+As machine learning applications are very similar to traditional applications in a technical sense, they need to be monitored as well. However, there are some aspects to take a closer look at, that may differ slightly from traditional software applications.
+**Metrics:** Regarding Google's Golden Signals the latency is important to measure the time our service takes for some input including data preprocessing and generating predictions. Another example is the saturation. ML-Models tend to acquire a lot of resources. Is our hardware strong enough to serve the amount of requests?
+
+**Logs:** The logs are the first source of information when an application needs debugging. E.g. this can be important to retrace errors in the data preprocessing graph.
+
+**Traces:** When metrics indicate long latencies, traces help to identify which step in the data prepocessing graph takes how long for a given input or how fast our model can generate predictions.
 
 # Target Groups
 The three pillars of observability - logging, metrics, and tracing - are important for various roles involved in software development and operations, including:
