@@ -34,6 +34,9 @@ Therefore, this project explains the three pillars of observability in software 
 ![three-pillars](docs/img/three-pillars.png)
 
 
+## What is Observability?
+Observability refers to the ability to gain insight into the internal workings of a software system through monitoring, logging, and analyzing its behavior. It involves collecting data about the system's performance, events, and errors, and making that data available for analysis and troubleshooting.
+
 ## Logs:
 Logging involves capturing and storing specific application events and error messages in a structured format for later analysis. Logs can provide valuable insights into an application's behavior, helping to identify errors, performance issues, and security threats. Logging is typically used to capture information about application events such as HTTP requests, database queries, and system errors.
 
@@ -65,8 +68,6 @@ The three pillars of observability - logging, metrics, and tracing - are importa
 
 **Visualization:** We use Grafana to provide a user-friendly interface for visualizing and analyzing data from various sources.
 
-**Metrics:** We use Prometheus to collect, store, and analyze time-series data for monitoring and alerting cloud-native applications and infrastructure.
-
 **Logs:** We use Loki to provide a horizontally-scalable, highly-available, and multi-tenant log aggregation system for cloud-native applications and infrastructure. Therefore, Promtail helps to collect those logs from the log files of the K8s pods and sends them to Loki for storage, analysis, and visualization.
 
 **Metrics:** We use Prometheus to collect, store, and analyze metrics as time-series data for monitoring K8s applications and infrastructure. Note: Grafana Mimir is not part of this architecture because Prometheus can store the metrics in an own timeseries database to some extent. This is good enough for this example. In a real world scenario you would definitely choose a separate metric store.
@@ -74,6 +75,7 @@ The three pillars of observability - logging, metrics, and tracing - are importa
 **Traces:** We use Tempo to provide a scalable and cost-effective distributed tracing backend for cloud-native applications and infrastructure.
 
 # Setup
+Helm charts are in our setup advantageous because they provide an easy and repeatable way to package, configure, and deploy complex applications on Kubernetes clusters. They also provide versioning, rollback, and templating capabilities, making it easy to manage application deployments across multiple environments.
 
 ## Creating a K8s-Namespace
 ```
