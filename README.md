@@ -38,10 +38,10 @@ Therefore, this project explains the three pillars of observability in software 
 ## What is Observability?
 Observability refers to the ability to gain insight into the internal workings of a software system through monitoring, logging, and analyzing its behavior. It involves collecting data about the system's performance, events, and errors, and making that data available for analysis and troubleshooting.
 
-## Logs:
+## Logs
 Logging involves capturing and storing specific application events and error messages in a structured format for later analysis. Logs can provide valuable insights into an application's behavior, helping to identify errors, performance issues, and security threats. Logging is typically used to capture information about application events such as HTTP requests, database queries, and system errors.
 
-## Metrics:
+## Metrics
 Metrics are quantitative measures of an application's performance. They are typically collected at regular intervals and stored in a time-series database for later analysis and can provide a real-time view of an application's performance, allowing teams to identify performance issues and track improvements over time.
 
 Golden Signals (see [Google's Golden Signals](https://sre.google/sre-book/monitoring-distributed-systems/#xref_monitoring_golden-signals)):
@@ -57,7 +57,7 @@ Tracing involves tracking the flow of requests through an application, including
 # Technical Observability in Machine Learning
 As machine learning applications are very similar to traditional applications in a technical sense, they need to be monitored as well. However, there are some aspects to take a closer look at, that may differ slightly from traditional software applications.
 
-**Metrics:** Regarding Google's Golden Signals the latency is important to measure the time our service takes for some input including data preprocessing and generating predictions. Another example is the saturation. ML-Models tend to acquire a lot of resources. Is our hardware strong enough to serve the amount of requests?
+**Metrics:** Regarding Google's Golden Signals the latency is important to measure the time our service takes for some input including data preprocessing and generating predictions (maybe we need adaptive batching to serve responses more quickly). Another example is the saturation. ML-Models tend to acquire a lot of resources. Is our hardware strong enough to serve the amount of requests (do we need to configure copy-on-write mechanisms to reduce memory utilization)?
 
 **Logs:** The logs are the first source of information when an application needs debugging. E.g. this can be important to retrace errors in the data preprocessing graph.
 
