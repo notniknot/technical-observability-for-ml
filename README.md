@@ -1,4 +1,4 @@
-la<h1 align="center">
+<h1 align="center">
 	<img
 		width="400"
 		alt="technical-observability-for-ml icon"
