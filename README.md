@@ -1,4 +1,4 @@
-<h1 align="center">
+la<h1 align="center">
 	<img
 		width="400"
 		alt="technical-observability-for-ml icon"
@@ -51,13 +51,15 @@ Golden Signals (see [Google's Golden Signals](https://sre.google/sre-book/monito
 - **Saturation:** "How "full" your service is. A measure of your system fraction, emphasizing the resources that are most constrained."
 
 ## Traces
-Tracing involves tracking the flow of requests through an application, including all of the services and components involved in processing the request. Tracing provides a detailed view of an application's behavior, helping to identify performance bottlenecks and pinpoint the source of errors. Tracing can be used to identify issues such as slow database queries, network latency, and inefficient code.
+Tracing involves tracking the flow of requests through an application or across multiple applications, including all of the services and components involved in processing the request. Tracing provides a detailed view of an application's behavior, helping to identify performance bottlenecks and pinpoint the source of errors. Tracing can be used to identify issues such as slow database queries, network latency, and inefficient code.
+
+![traces](docs/img/traces.png)
 
 
 # Technical Observability in Machine Learning
 As machine learning applications are very similar to traditional applications in a technical sense, they need to be monitored as well. However, there are some aspects to take a closer look at, that may differ slightly from traditional software applications.
 
-**Metrics:** Regarding Google's Golden Signals the latency is important to measure the time our service takes for some input including data preprocessing and generating predictions (maybe we need adaptive batching to serve responses more quickly -> see [adaptive batching](https://docs.bentoml.org/en/latest/guides/batching.html#adaptive-batching)). Another example is the saturation. ML-Models tend to acquire a lot of resources. Is our hardware strong enough to serve the amount of requests (do we need to configure copy-on-write mechanisms to reduce memory utilization -> see [preloading](https://www.joelsleppy.com/blog/gunicorn-application-preloading/))?
+**Metrics:** Regarding Google's Golden Signals the latency is important measuring the time our service takes for some input including data preprocessing and generating predictions (maybe we need adaptive batching to serve responses more quickly -> see [adaptive batching](https://docs.bentoml.org/en/latest/guides/batching.html#adaptive-batching)). Another example is the saturation. ML-Models tend to acquire a lot of resources. Is our hardware strong enough to serve the amount of requests (do we need to configure copy-on-write mechanisms to reduce memory utilization -> see [preloading](https://www.joelsleppy.com/blog/gunicorn-application-preloading/))?
 
 **Logs:** The logs are the first source of information when an application needs debugging. E.g. this can be important to retrace errors in the data preprocessing graph.
 
@@ -108,6 +110,16 @@ Get your 'admin' user password by running:
 kubectl get secret --namespace technical-observability-for-ml grafana -o jsonpath="{.data.admin-password}" | base64 --decode ; echo
 ```
 
+Add the datasources:
+ - "Loki": `http://loki-read-headless:3100` with derived fields:
+   - Name: `trace`
+   - Regex: `(?:trace)=(\w+)`
+   - Query: `${__value.raw}`
+ - "Prometheus": `http://prometheus-server`
+ - "Tempo": `http://tempo:3100`
+
+Import the dashboard `bentoml_grafana_dashboard.json` for our prometheus metrics.
+
 ### MinIO
 Installation
 ```
@@ -157,5 +169,87 @@ helm repo update
 helm upgrade -f helm-config/prometheus/values.yaml --install -n technical-observability-for-ml prometheus prometheus-community/prometheus --version 19.6.1
 ```
 
+## Setting up the example application
+
+We will train a linear classifier based on the newsgroups dataset.
+BentoML acts as the serving framework as it automatically includes the demonstrated observability aspects.
+
+The example consist of the following directory structure:
+```
+tecobsml-example
+├── manifests
+│   ├── cm_bentoml_configuration.yaml  # Configures technical aspects of BentoML
+│   ├── pod_bentoml_example1.yaml  # Pod that runs the model
+│   └── svc_bentoml_node_port.yaml  # Service that exposes the pod on the node
+└── src
+    ├── bentofile.yaml  # Central configuration file for BentoML
+    ├── preprocessing.py  # Preprocessing code
+    ├── requirements.txt  # Required python packages
+    ├── service.py  # BentoML service file
+    └── train.py  # Trains and exports a model
+```
+
+The following steps are needed to recreate the example:
+1. Navigate into the example src directory
+    ```
+    cd tecobsml-example/src
+    ```
+
+2. Train the model
+    ```
+    python train.py
+    ```
+
+3. Build the bento
+    ```
+    bentoml build -f bentofile.yaml
+    ```
+
+4. Create an image (fill in the necessary information)
+    ```
+    bentoml containerize doc_classifier:latest -t <username>/tecobsml:example
+    ```
+
+5. Push the image to dockerhub (optional)
+    ```
+    docker push <username>/tecobsml:example
+    ```
+
+6. Apply the manifests on the cluster
+    ```
+    kubectl apply -f tecobsml-example/manifests
+    ```
+
+# Example
+The first example demonstrates the use of distributed logging and metrics.
+
+Send some post requests to trigger the service:
+```
+curl -X POST --data "hello world" http://127.0.0.1:30010/predict
+```
+
+## Logs
+Explore the logs by selecting Loki as data source. Filter for the correct namespace and container by using the labels. Then you can inspect the container logs.
+![loki_logs](docs/img/loki_logs.png)
+
+## Traces
+Expand a log message and click on the Tempo link next to the trace-id. There you can follow the trace through the application.
+![tempo_tracing](docs/img/tempo_tracing.png)
+
+
+## Metrics
+Setup and start a load balancer to give some load to our service:
+```
+pip install locust==2.15.0
+```
+```
+locust --config load_testing/example.conf
+```
+
+Open up the `BentoML` dashboard in Grafana and wait a few minutes to take a closer look at the BentoML default metrics.
+![prometheus_metrics](docs/img/prometheus_metrics.png)
+
+
 # Upcoming Considerations
+- Possible shift in the observability landscape by OpenTelemetry -> OpenTelemetry Protocol
 ...

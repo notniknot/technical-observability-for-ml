@@ -9,6 +9,15 @@ loki:
       endpoint: minio:9000
       s3ForcePathStyle: true
       insecure: true
+    schema_config:
+      configs:
+        - from: "2020-09-07"
+          store: boltdb-shipper
+          object_store: s3
+          schema: v11
+          index:
+            period: 24h
+            prefix: loki_index_
   commonConfig:
     replication_factor: 1
   auth_enabled: false

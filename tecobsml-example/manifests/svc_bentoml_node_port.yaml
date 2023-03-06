@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    run: tecobsml-example
+  name: tecobsml-example
+  namespace: technical-observability-for-ml
+spec:
+  type: NodePort
+  ports:
+  - port: 3010
+    protocol: TCP
+    targetPort: 3010
+    nodePort: 30010
+  selector:
+    run: tecobsml-example
