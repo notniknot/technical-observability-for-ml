@@ -5,8 +5,10 @@ from locust.user.wait_time import between
 from sklearn.datasets import fetch_20newsgroups
 
 categories = [
-    "alt.atheism",
-    "talk.religion.misc",
+    "rec.autos",
+    "rec.motorcycles",
+    "rec.sport.baseball",
+    "rec.sport.hockey",
 ]
 data = fetch_20newsgroups(subset="test", categories=categories)
 

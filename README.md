@@ -24,6 +24,7 @@
   <a href="#target-groups">Target Groups</a> •
   <a href="#architecture">Architecture</a> •
   <a href="#setup">Setup</a> •
+  <a href="#example">Example</a> •
   <a href="#upcoming-considerations">Upcoming Considerations</a>
 </p>
 
@@ -171,10 +172,10 @@ helm upgrade -f helm-config/prometheus/values.yaml --install -n technical-observ
 
 ## Setting up the example application
 
-We will train a linear classifier based on the newsgroups dataset.
+We will train a linear classifier based on the newsgroups dataset ('rec.autos', 'rec.motorcycles', 'rec.sport.baseball', 'rec.sport.hockey').
 BentoML acts as the serving framework as it automatically includes the demonstrated observability aspects.
 
-The example consist of the following directory structure:
+The example consists of the following directory structure:
 ```
 tecobsml-example
 ├── manifests
@@ -225,7 +226,7 @@ The first example demonstrates the use of distributed logging and metrics.
 
 Send some post requests to trigger the service:
 ```
-curl -X POST --data "hello world" http://127.0.0.1:30010/predict
+curl -X POST --data "I go to the stadium and watch some players standing on a field for like four hours. Not boring at all." http://127.0.0.1:30010/predict
 ```
 
 ## Logs
@@ -251,5 +252,7 @@ Open up the `BentoML` dashboard in Grafana and wait a few minutes to take a clos
 
 
 # Upcoming Considerations
-- Possible shift in the observability landscape by OpenTelemetry -> OpenTelemetry Protocol
-...
+Now I would consider OpenTelemetry as the de facto standard in tracing as of this writing. But when it comes to logging and metrics it has a long way to go, as it strives to do much more than standardising tracing. It tries to achieve a possible shift in the observability landscape by reforming logs and metrics as well to achieve vendor-agnistic data collection.
+
+Currently "there are often different libraries and different collection agents, using different protocols and data models, with telemetry data ending up in separate backends that don’t know how to work well together" ([Limitations of non-OpenTelemetry Solutions](https://opentelemetry.io/docs/reference/specification/logs/#limitations-of-non-opentelemetry-solutions)).
+A solution is to introduce a layer that brings logs, metrics and traces closer together regarding contexts and attributes by enriching the data ([OpenTelemetry Solution](https://opentelemetry.io/docs/reference/specification/logs/#opentelemetry-solution)).

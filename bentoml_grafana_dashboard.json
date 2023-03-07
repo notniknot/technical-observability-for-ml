@@ -100,6 +100,196 @@
             }
           },
           "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 0
+      },
+      "id": 11,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "code",
+          "expr": "sum(rate(container_cpu_usage_seconds_total{pod=\"tecobsml-example\"}[5m])) without (container_name)",
+          "instant": true,
+          "key": "Q-1000bbe0-2b7c-40a4-bcb7-759221230afd-0",
+          "legendFormat": "__auto",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "container_cpu_usage_seconds_total",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "bytes"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 0
+      },
+      "id": 12,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "code",
+          "expr": "sum(rate(container_memory_working_set_bytes{pod=\"tecobsml-example\"}[5m]))",
+          "instant": true,
+          "key": "Q-bbaf91f0-9670-4184-b89c-c5b256640cad-0",
+          "legendFormat": "__auto",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "container_memory_working_set_bytes",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
           "min": 0,
           "thresholds": {
             "mode": "absolute",
@@ -124,7 +314,7 @@
               "options": {
                 "mode": "exclude",
                 "names": [
-                  "histogram_quantile(0.95, sum(rate(bentoml_api_server_request_duration_seconds_bucket{endpoint=\"/predict\", service_name=\"doc_classifier_2_2\"}[1m0s])) by (le))"
+                  "histogram_quantile(0.95, sum(rate(bentoml_api_server_request_duration_seconds_bucket{endpoint=\"/predict\", service_name=\"doc_classifier\"}[1m0s])) by (le))"
                 ],
                 "prefix": "All except:",
                 "readOnly": true
@@ -147,7 +337,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 0
+        "y": 8
       },
       "id": 10,
       "options": {
@@ -240,7 +430,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 0
+        "y": 8
       },
       "id": 8,
       "options": {
@@ -337,7 +527,7 @@
               "options": {
                 "mode": "exclude",
                 "names": [
-                  "{endpoint=\"/predict\", http_response_code=\"200\", instance=\"10.1.1.87:3012\", job=\"kubernetes-pod-scrape-every-2s\", kubernetes_name=\"example2-2\", kubernetes_namespace=\"technical-observability-for-ml\", kubernetes_node=\"docker-desktop\", run=\"example2-2\", service_name=\"doc_classifier_2_2\", service_version=\"22km3uv3vcpyflg6\"}"
+                  "{endpoint=\"/predict\", http_response_code=\"200\", instance=\"10.1.1.108:3010\", job=\"kubernetes-pod-scrape-every-2s\", kubernetes_name=\"tecobsml-example\", kubernetes_namespace=\"technical-observability-for-ml\", kubernetes_node=\"docker-desktop\", run=\"tecobsml-example\", service_name=\"doc_classifier\", service_version=\"itvzjlf446pznlg6\"}"
                 ],
                 "prefix": "All except:",
                 "readOnly": true
@@ -360,7 +550,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 8
+        "y": 16
       },
       "id": 4,
       "options": {
@@ -431,6 +621,7 @@
             }
           },
           "mappings": [],
+          "min": 0,
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -452,7 +643,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 8
+        "y": 16
       },
       "id": 6,
       "options": {
@@ -515,7 +706,7 @@
   },
   "time": {
     "from": "now-5m",
-    "to": "now"
+    "to": "now-4s"
   },
   "timepicker": {
     "nowDelay": "4s"
@@ -523,6 +714,6 @@
   "timezone": "",
   "title": "BentoML",
   "uid": "r8nzRex4z",
-  "version": 10,
+  "version": 16,
   "weekStart": ""
 }

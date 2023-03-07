@@ -5,8 +5,10 @@ from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer
 from sklearn.linear_model import SGDClassifier
 
 categories = [
-    "alt.atheism",
-    "talk.religion.misc",
+    "rec.autos",
+    "rec.motorcycles",
+    "rec.sport.baseball",
+    "rec.sport.hockey",
 ]
 
 print("Loading 20 newsgroups dataset for categories:")
