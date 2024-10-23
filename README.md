@@ -116,6 +116,7 @@ Add the datasources:
    - Name: `trace`
    - Regex: `(?:trace)=(\w+)`
    - Query: `${__value.raw}`
+   - Activate `Internal Link "Tempo"`
  - "Prometheus": `http://prometheus-server`
  - "Tempo": `http://tempo:3100`
 
