@@ -143,7 +143,7 @@ Login into MinIO by navigating to "http://localhost:30001" and create a new buck
 # see https://artifacthub.io/packages/helm/grafana/loki-simple-scalable/1.8.11
 helm repo add grafana https://grafana.github.io/helm-charts
 helm repo update
-helm upgrade -f helm-config/loki/values.yaml --install -n technical-observability-for-ml loki grafana/loki-simple-scalable
+helm upgrade -f helm-config/loki/values.yaml --install -n technical-observability-for-ml loki grafana/loki-simple-scalable --version 1.8.11
 ```
 
 ### Promtail
